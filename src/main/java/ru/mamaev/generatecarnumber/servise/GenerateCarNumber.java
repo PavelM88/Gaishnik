@@ -7,8 +7,6 @@ import java.util.Random;
 @Service
 public class GenerateCarNumber {
     Random randomNumber = new Random();
-    // для хранения номера
-    private final static StringBuilder carNumber = new StringBuilder();
     private final static char[] symbol = {'А', 'В', 'Е', 'К', 'М', 'Н', 'О', 'Р', 'С', 'Т', 'У', 'Х'};
     private final static String region = " 116 RUS ";
     private int serialNumber;
@@ -25,15 +23,16 @@ public class GenerateCarNumber {
      * @return номер машины
      */
     public String random() {
+        StringBuilder number = new StringBuilder();
         char firstChar = symbol[randomNumber.nextInt(symbol.length)];
         char secondChar = symbol[randomNumber.nextInt(symbol.length)];
         char thirdChar = symbol[randomNumber.nextInt(symbol.length)];
-        carNumber.append(firstChar);
-        carNumber.append(getRandomNumber());
-        carNumber.append(secondChar);
-        carNumber.append(thirdChar);
-        carNumber.append(region);
-        return carNumber.toString();
+        number.append(firstChar);
+        number.append(getRandomNumber());
+        number.append(secondChar);
+        number.append(thirdChar);
+        number.append(region);
+        return number.toString();
     }
 
     /**
@@ -55,6 +54,7 @@ public class GenerateCarNumber {
      * @throws Exception исключение если больше нет комбинаций для номеров
      */
     public String next() throws Exception {
+        StringBuilder nextCarNumber = new StringBuilder();
         if (serialNumber > 999) {
             thirdPositionChar++;
         }
@@ -69,13 +69,13 @@ public class GenerateCarNumber {
         if (firstPositionChar > symbol.length - 1) {
             throw new Exception("Комбинации номеров закончились!");
         }
-        carNumber.append(symbol[firstPositionChar]);
-        carNumber.append(ordinalNumber());
-        carNumber.append(symbol[secondPositionChar]);
-        carNumber.append(symbol[thirdPositionChar]);
-        carNumber.append(region);
+        nextCarNumber.append(symbol[firstPositionChar]);
+        nextCarNumber.append(ordinalNumber());
+        nextCarNumber.append(symbol[secondPositionChar]);
+        nextCarNumber.append(symbol[thirdPositionChar]);
+        nextCarNumber.append(region);
 
-        return carNumber.toString();
+        return nextCarNumber.toString();
     }
 
     /**
