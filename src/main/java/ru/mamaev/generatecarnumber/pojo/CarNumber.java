@@ -41,12 +41,13 @@ public class CarNumber {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CarNumber carNumber = (CarNumber) o;
-        return Objects.equals(id, carNumber.id);
+        CarNumber carNumber1 = (CarNumber) o;
+        return Objects.equals(id, carNumber1.id) &&
+                Objects.equals(carNumber, carNumber1.carNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, carNumber);
     }
 }
