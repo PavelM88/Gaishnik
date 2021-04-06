@@ -1,11 +1,19 @@
-package ru.mamaev.generatecarnumber.servise;
+package ru.mamaev.generatecarnumber.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.mamaev.generatecarnumber.pojo.CarNumber;
+import ru.mamaev.generatecarnumber.repo.CarNumberRepo;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
-public class GenerateCarNumber {
+public class GenerateCarNumber implements NumberService {
+
+    @Autowired
+    CarNumberRepo numberRepo;
+
     Random randomNumber = new Random();
     private final static char[] symbol = {'А', 'В', 'Е', 'К', 'М', 'Н', 'О', 'Р', 'С', 'Т', 'У', 'Х'};
     private final static String region = " 116 RUS ";
@@ -50,6 +58,7 @@ public class GenerateCarNumber {
 
     /**
      * Метод получает номер последовательно
+     *
      * @return carNumber
      * @throws Exception исключение если больше нет комбинаций для номеров
      */
@@ -80,6 +89,7 @@ public class GenerateCarNumber {
 
     /**
      * Метод для добавления префикса "0" или "00"
+     *
      * @return prefix
      */
     private String ordinalNumber() {
@@ -93,5 +103,25 @@ public class GenerateCarNumber {
         prefix = serialNumber < 100 ? prefix + serialNumber : String.valueOf(serialNumber);
         serialNumber++;
         return prefix;
+    }
+
+    @Override
+    public CarNumber getById(Long id) {
+        return numberRepo.getOne(id);
+    }
+
+    @Override
+    public void save(CarNumber number) {
+        numberRepo.save(number);
+    }
+
+    @Override
+    public void delete(Long id) {
+        numberRepo.deleteById(id);
+    }
+
+    @Override
+    public List<CarNumber> getAll() {
+        return numberRepo.findAll();
     }
 }

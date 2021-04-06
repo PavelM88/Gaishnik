@@ -42,12 +42,12 @@ public class CarNumber {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CarNumber carNumber1 = (CarNumber) o;
-        return Objects.equals(id, carNumber1.id) &&
-                Objects.equals(carNumber, carNumber1.carNumber);
+        return id.equals(carNumber1.id) &&
+                carNumber.equals(carNumber1.carNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, carNumber);
+        return Objects.hash(id);
     }
 }
